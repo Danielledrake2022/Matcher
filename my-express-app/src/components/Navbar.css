@@ -23,8 +23,11 @@ li{
     /* margin-bottom: 0px; */
     border-radius: 8px;
     text-decoration-line: none;
-    color:black;
     
+    
+  }
+  h4{
+    color:black;
   }
   
   

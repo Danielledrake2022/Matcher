@@ -1,0 +1,21 @@
+
+.User img{
+    display: block;
+    margin: 0 auto;
+    
+}
+.User{
+    text-align: left;
+    display: grid;
+    margin-left: 30%;
+    margin-right: 30%;
+
+}
+
+button{
+    margin-top: 10px;
+ 
+    margin-left: 40%;
+    margin-right: 40%;
+}
+

@@ -1,3 +1,22 @@
 h2{
     text-align: center;
-}
+    color: transparent;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+    font-family: 'Denk One', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 30px;
+  
+  }
+  .DislikedView img{
+    display: grid;
+    grid-template-columns: repeat(1fr, 1fr);
+    display: grid;
+    grid-template-columns: repeat(2fr, 1fr);
+    margin-top: 5vh;
+    margin-left: 5vh;
+    
+  
+  border-radius: 20px;
+  width: 240px;
+  }

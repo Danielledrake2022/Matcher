@@ -1,0 +1,12 @@
+
+
+.SeenView img{
+    display: grid;
+    grid-template-columns: repeat(1fr, 1fr);
+    display: grid;
+    grid-template-columns: repeat(2fr, 1fr);
+    margin-top: 5vh;
+    margin-left: 5vh;
+  border-radius: 20px;
+  width: 240px;
+  }

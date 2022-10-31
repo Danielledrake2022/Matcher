@@ -1,3 +1,9 @@
+*{
+  
+    font-family: Arial, Helvetica, sans-serif;
+    
+
+}
 .App{
-    background-color: rgb(189, 190, 255);
+    background-color: #ffffff;
 }

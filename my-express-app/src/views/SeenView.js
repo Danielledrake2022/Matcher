@@ -1,10 +1,21 @@
 import React from 'react';
+import "./SeenView.css"
+
+let urlImage ="https://image.tmdb.org/t/p/original/"
 
 
-function SeenView() {
+function SeenView(props) {
+
     return (
         <div className="SeenView">
-            <h2> This is Seen</h2>
+            <h2>Seen</h2>
+            {
+            // props.movieActionSeen.map((movie) => (
+            //     <div key={movie.id} > 
+            //     <img src={`${urlImage}${movie.poster_path}`} alt=""/>
+            //     </div>
+            // ))
+        }
         </div>
     );
 }

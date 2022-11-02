@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 import "./HomeView.css";
-// import TinderCard from 'react-tinder-card'
-// import Deck from './Deck';
 import { FcLike } from "react-icons/fc";
 import { AiFillDislike } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import "animate.css";
-
-// let index = 0;
 
 let urlImage = "https://image.tmdb.org/t/p/original/";
 
@@ -30,7 +26,6 @@ function HomeView(props) {
   function IfSeen(id) {
     let currentSeen = props.allMovies.filter((movie) => movie.id === id);
     setSeen((seen) => [...seen, currentSeen[0]]);
-    // setCurrent(props.allMovies[index++]);
     let myIndex = index + 1;
     setIndex((index) => index + 1);
     setCurrent(props.allMovies[myIndex]);
@@ -40,7 +35,6 @@ function HomeView(props) {
   function IfDisliked(id) {
     let currentDisliked = props.allMovies.filter((movie) => movie.id === id);
     setDisliked((disliked) => [...disliked, currentDisliked[0]]);
-    // setCurrent(props.allMovies[index++]);
     let myIndex = index + 1;
     setIndex((index) => index + 1);
     setCurrent(props.allMovies[myIndex]);

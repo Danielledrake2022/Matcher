@@ -14,7 +14,7 @@ import Error404View from "./views/Error404View";
 function App() {
   // const MovieApiUrl0= 'https://api.themoviedb.org/3/movie/popular?api_key=92b023c677ec515ad3da46754457863d&language=en-US&page=4';
   const MovieApiUrl1 =
-    "https://api.themoviedb.org/3/movie/popular?api_key=92b023c677ec515ad3da46754457863d&language=en-US&page=1";
+    "https://api.themoviedb.org/3/movie/popular?api_key=92b023c677ec515ad3da46754457863d&language=en-US&page=3";
   const [allMovies, setAllMovies] = useState([]);
   const [movieActionLiked, setMovieActionLiked] = useState([]);
   const [movieActionSeen, setMovieActionSeen] = useState([]);

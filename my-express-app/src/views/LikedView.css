@@ -22,8 +22,6 @@ h2 {
 }
 
 .Featured-Movie {
-  /* margin-left: auto; */
-
   text-align: left;
   display: grid;
   grid-template-columns: 1fr 1fr;

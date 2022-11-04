@@ -12,21 +12,25 @@ import UserView from "./views/UserView";
 import Error404View from "./views/Error404View";
 
 function App() {
-  // const MovieApiUrl0= 'https://api.themoviedb.org/3/movie/popular?api_key=92b023c677ec515ad3da46754457863d&language=en-US&page=4';
-  const MovieApiUrl1 =
-    "https://api.themoviedb.org/3/movie/popular?api_key=92b023c677ec515ad3da46754457863d&language=en-US&page=3";
   const [allMovies, setAllMovies] = useState([]);
   const [movieActionLiked, setMovieActionLiked] = useState([]);
   const [movieActionSeen, setMovieActionSeen] = useState([]);
   const [movieActionDisliked, setMovieActionDisliked] = useState([]);
   const [movieGrid, setMovieGrid] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1); // the current page you are on has the initial value of page(1) to be incremented later
 
+
+ // get current page from the API and get the next page to be fetched from the API when movies are liked, seen or disliked or finnished on the current page
   const getMovies = async () => {
     try {
-      let response = await fetch(MovieApiUrl1);
+      let response = await fetch(
+        `https://api.themoviedb.org/3/movie/popular?api_key=92b023c677ec515ad3da46754457863d&language=en-US&page=${currentPage}`
+      );
       if (response.ok) {
         let data = await response.json();
         setAllMovies(data.results);
+        console.log(data.results);
+        console.log(currentPage);
       } else {
         console.log(`Server error: ${response.status}: ${response.statusText}`);
       }
@@ -34,6 +38,7 @@ function App() {
       console.log("ERROR:", error.message);
     }
   };
+
 
   useEffect(() => {
     getMovies();
@@ -56,6 +61,8 @@ function App() {
     setMovieGrid(result[0]);
   }
 
+
+
   return (
     <div className="App">
       <Navbar />
@@ -70,6 +77,10 @@ function App() {
                 addMovieActionLikedCb={addMovieActionLiked}
                 addMovieActionSeenCb={addMovieActionSeen}
                 addMovieActionDislikedCb={addMovieActionDisliked}
+                // the currentpage should be passed from homeview here:
+                getMoviesCb={getMovies}
+                currentPage={currentPage}
+                setCurrentPageCb={setCurrentPage}
               />
             }
           />

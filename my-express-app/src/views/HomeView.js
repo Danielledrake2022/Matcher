@@ -15,7 +15,6 @@ function HomeView(props) {
   const [index, setIndex] = useState(0);
 
 
-
 // each one of these functions need to check if the user has clicked , then call the callback from the parent : props. If i have seen last movie call the callback from parent to see next page   
 
   function IfLiked(id) {
@@ -46,15 +45,13 @@ function HomeView(props) {
     setIndex((index) => index + 1);
     setCurrent(props.allMovies[index]);
     props.addMovieActionSeenCb([...seen, currentSeen[0]]);
-    console.log(index);
     // if seen and there are no more movies on the current page, fetch the next page from the API   
       if (index === props.allMovies.length -1) {
        props.setCurrentPageCb(props.currentPage + 1);
        console.log("current page",props.currentPage);
        props.getMoviesCb();
        setCurrent(props.allMovies[0]);
-       setIndex(0);
-      console.log("hello");
+       setIndex(0);;
       }
   }
 
@@ -65,7 +62,6 @@ function HomeView(props) {
     setIndex((index) => index + 1);
     setCurrent(props.allMovies[index]);
     props.addMovieActionDislikedCb([...disliked, currentDisliked[0]]);
-    console.log(index);
     // if Disliked and there are no more movies on the current page, fetch the next page from the API   
       if (index === props.allMovies.length -1) {
        props.setCurrentPageCb(props.currentPage + 1);
@@ -73,7 +69,6 @@ function HomeView(props) {
        props.getMoviesCb();
        setCurrent(props.allMovies[0]);
        setIndex(0);
-      console.log("hello");
       }
   }
 

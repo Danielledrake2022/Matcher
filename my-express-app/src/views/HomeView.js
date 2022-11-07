@@ -15,24 +15,23 @@ function HomeView(props) {
   const [index, setIndex] = useState(0);
 
 
-// each one of these functions need to check if the user has clicked , then call the callback from the parent : props. If i have seen last movie call the callback from parent to see next page   
+// each one of the functions need to check at every click if its the last movie of the page. if it is then call the callback from the parent using props.   
 
-  function IfLiked(id) {
+ async function IfLiked(id) {
     let currentLiked = props.allMovies.filter((movie) => movie.id === id);
     setLiked((liked) => [...liked, currentLiked[0]]);
-    // let myIndex = index + 1;
-    setIndex((index) => index + 1);
-    setCurrent(props.allMovies[index]);
+    // let myIndex = index + 1; // what is this for? 
+    setCurrent(props.allMovies[index + 1]);
+    setIndex((index) => index + 1); 
     props.addMovieActionLikedCb([...liked, currentLiked[0]]);
-    console.log(index);
-  // if liked and there are no more movies on the current page, fetch the next page from the API   
+    // console.log(index);
+  // ifliked and there are no more movies on the current page, fetch the next page from the API   
     if (index === props.allMovies.length -1) {
+     await props.getMoviesCb(props.currentPage + 1); // bc we cannot assume if this will be called later than 
      props.setCurrentPageCb(props.currentPage + 1);
-     console.log("current page",props.currentPage);
-     props.getMoviesCb();
+    //  console.log("current page",props.currentPage);
      setCurrent(props.allMovies[0]);
      setIndex(0);
-    console.log("hello");
     }
   }
 
@@ -45,14 +44,16 @@ function HomeView(props) {
     setIndex((index) => index + 1);
     setCurrent(props.allMovies[index]);
     props.addMovieActionSeenCb([...seen, currentSeen[0]]);
-    // if seen and there are no more movies on the current page, fetch the next page from the API   
-      if (index === props.allMovies.length -1) {
-       props.setCurrentPageCb(props.currentPage + 1);
-       console.log("current page",props.currentPage);
-       props.getMoviesCb();
-       setCurrent(props.allMovies[0]);
-       setIndex(0);;
-      }
+    console.log(index);
+    // if the user has seen the last movie on the current page, fetch the next page from the API
+    if (index === props.allMovies.length -1) {
+      props.setCurrentPageCb(props.currentPage + 1);
+      console.log("current page",props.currentPage);
+      props.getMoviesCb();
+      setCurrent(props.allMovies[0]);
+      setIndex(0);
+
+    }
   }
 
   function IfDisliked(id) {
@@ -78,7 +79,9 @@ const noMoreMovies = () => {
     return <h1>no more movies</h1>
   }
 }
-
+if (!current)  { 
+  return <h2>Loading..</h2>
+}
 
   return (
     <div className="HomeView">

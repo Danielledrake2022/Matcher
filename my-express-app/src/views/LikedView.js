@@ -12,7 +12,7 @@ function LikedView(props) {
   return (
     <div className="LikedView">
       <h2>Liked</h2>
-      {Object.keys(props.selectMovie).length ? (
+      {Object.keys(props.selectMovie).length ? ( // if the object is empty, then it is false
         <div className="Featured-Movie">
           <div>
             <img src={`${urlImage}${props.selectMovie.poster_path}`} alt="" />
@@ -24,9 +24,9 @@ function LikedView(props) {
         </div>
       ) : null}
 
-      <div className="ImageGrid">
-        {props.movieActionLiked.length
-          ? props.movieActionLiked.map((movie) => (
+      <div className="ImageGrid"> 
+        {props.movieActionLiked.length 
+          ? props.movieActionLiked.map((movie) => ( 
               <div key={movie.id}>
                 <div className="show" onClick={(e) => handleClick(movie.id)}>
                   <img src={`${urlImage}${movie.poster_path}`} alt="" />

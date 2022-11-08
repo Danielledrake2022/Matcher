@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
 import "./HomeView.css";
 import { FcLike } from "react-icons/fc";
 import { AiFillDislike } from "react-icons/ai";
@@ -13,67 +13,86 @@ function HomeView(props) {
   const [disliked, setDisliked] = useState([]);
   const [current, setCurrent] = useState(props.allMovies[0]);
   const [index, setIndex] = useState(0);
+  
 
 
-// each one of the functions need to check at every click if its the last movie of the page. if it is then call the callback from the parent using props.   
+  // reset the current movie and index whenever props.allMovies changes (i.e. a new page is fetched)
+  useEffect (() => {  
+  setCurrent(props.allMovies[0]); 
+  setIndex(0);
+  }, [props.allMovies]);
 
- async function IfLiked(id) {
-    let currentLiked = props.allMovies.filter((movie) => movie.id === id);
-    setLiked((liked) => [...liked, currentLiked[0]]);
-    // let myIndex = index + 1; // what is this for? 
-    setCurrent(props.allMovies[index + 1]);
-    setIndex((index) => index + 1); 
-    props.addMovieActionLikedCb([...liked, currentLiked[0]]);
-    // console.log(index);
-  // ifliked and there are no more movies on the current page, fetch the next page from the API   
-    if (index === props.allMovies.length -1) {
-     await props.getMoviesCb(props.currentPage + 1); // bc we cannot assume if this will be called later than 
-     props.setCurrentPageCb(props.currentPage + 1);
-    //  console.log("current page",props.currentPage);
-     setCurrent(props.allMovies[0]);
-     setIndex(0);
+
+  async function IfLiked() {
+    // Add current movie to liked
+    props.addMovieActionLikedCb([...liked, current]);
+    setLiked((liked) => [...liked, current]);
+    // Are we at last movie on page?
+    if (index === props.allMovies.length - 1) {
+      // Yes, we're at last movie; get another page
+      await props.getMoviesCb(props.currentPage + 1);
+      // (current and index are reset by useEffect())
+    } else {
+      // No, there's another movie on the page
+      setCurrent(props.allMovies[index+1]);
+      setIndex(index => index + 1);
+    }
+  }
+
+  async function IfSeen() {
+    // Add current movie to seen
+    props.addMovieActionSeenCb([...seen, current]);
+    setSeen((seen) => [...seen, current]);
+    // Are we at last movie on page?
+    if (index === props.allMovies.length - 1) {
+      // Yes, we're at last movie; get another page
+      await props.getMoviesCb(props.currentPage + 1);
+      // (current and index are reset by useEffect())
+    } else {
+      // No, there's another movie on the page
+      setCurrent(props.allMovies[index+1]);
+      setIndex(index => index + 1);
+    }
+  }
+
+  async function IfDisliked() {
+    // Add current movie to disliked
+    props.addMovieActionDislikedCb([...disliked, current]);
+    setDisliked((disliked) => [...disliked, current]);
+    // Are we at last movie on page?
+    if (index === props.allMovies.length - 1) {
+      // Yes, we're at last movie; get another page
+      await props.getMoviesCb(props.currentPage + 1);
+      // (current and index are reset by useEffect())
+    } else {
+      // No, there's another movie on the page
+      setCurrent(props.allMovies[index+1]);
+      setIndex(index => index + 1);
     }
   }
 
 
 
-  function IfSeen(id) {
-    let currentSeen = props.allMovies.filter((movie) => movie.id === id);
-    setSeen((seen) => [...seen, currentSeen[0]]);
-    // let myIndex = index + 1;
-    setIndex((index) => index + 1);
-    setCurrent(props.allMovies[index]);
-    props.addMovieActionSeenCb([...seen, currentSeen[0]]);
-    console.log(index);
-    // if the user has seen the last movie on the current page, fetch the next page from the API
-    if (index === props.allMovies.length -1) {
-      props.setCurrentPageCb(props.currentPage + 1);
-      console.log("current page",props.currentPage);
-      props.getMoviesCb();
-      setCurrent(props.allMovies[0]);
-      setIndex(0);
+ 
+//  async function IfLiked(id) {
+//     let currentLiked = props.allMovies.filter((movie) => movie.id === id);
+//     setLiked((liked) => [...liked, currentLiked[0]]);
+//     let myIndex = index + 1;   // what is this for?
+//     setCurrent(props.allMovies[index + 1]);
+//     setIndex((index) => index + 1); 
+//     props.addMovieActionLikedCb([...liked, currentLiked[0]]);
+//   ifliked and there are no more movies on the current page, fetch the next page from the API  
+//     if (index === props.allMovies.length -1) {
+//      await props.getMoviesCb(props.currentPage + 1); // bc we cannot assume if this will be called later than 
+//      props.setCurrentPageCb(props.currentPage + 1);
+//      setCurrent(props.allMovies[0]);
+//      setIndex(0);
+//     }
+//   }
 
-    }
-  }
 
-  function IfDisliked(id) {
-    let currentDisliked = props.allMovies.filter((movie) => movie.id === id);
-    setDisliked((disliked) => [...disliked, currentDisliked[0]]);
-    // let myIndex = index + 1;
-    setIndex((index) => index + 1);
-    setCurrent(props.allMovies[index]);
-    props.addMovieActionDislikedCb([...disliked, currentDisliked[0]]);
-    // if Disliked and there are no more movies on the current page, fetch the next page from the API   
-      if (index === props.allMovies.length -1) {
-       props.setCurrentPageCb(props.currentPage + 1);
-       console.log("current page",props.currentPage);
-       props.getMoviesCb();
-       setCurrent(props.allMovies[0]);
-       setIndex(0);
-      }
-  }
 
-// if there are no more movies on the last page. 
+
 const noMoreMovies = () => {
   if (index === props.allMovies.length -1) {
     return <h1>no more movies</h1>

@@ -26,12 +26,11 @@ function App() {
       let response = await fetch(
         `https://api.themoviedb.org/3/movie/popular?api_key=92b023c677ec515ad3da46754457863d&language=en-US&page=${pageId}`
       );
-
       if (response.ok) {
         let data = await response.json();
         setAllMovies(data.results);
+        setCurrentPage(pageId);     
         console.log(data.results);
-        console.log(pageId);
       } else {
         console.log(`Server error: ${response.status}: ${response.statusText}`);
       }
@@ -41,10 +40,10 @@ function App() {
   };
 
 // if the object is the last movie on the page, fetch the next page from the API and set the current page to the next page
-  useEffect(() => {
-    getMovies(1);
+  
+useEffect(() => {
+    getMovies(1); 
   }, []);
-
 
 
 
